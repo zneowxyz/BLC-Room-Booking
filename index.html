@@ -554,12 +554,11 @@ const HEADERS = {
   'Prefer': 'return=representation'
 };
 
-// ── Room photos from Supabase Storage ───────────────────────────
-const STORAGE_URL = `${SUPABASE_URL}/storage/v1/object/public/room-photos`;
+// ── Room photos from GitHub repository ───────────────────────────
+const PHOTOS_URL = `https://raw.githubusercontent.com/zneowxyz/BLC-Room-Booking/main/photos`;
 
 function getRoomPhotoUrl(room) {
-  // Try jpg first, the image tag will handle errors
-  return `${STORAGE_URL}/${room}.jpg`;
+  return `${PHOTOS_URL}/${room}.JPG`;
 }
 
 
