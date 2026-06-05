@@ -164,21 +164,6 @@
     letter-spacing: 0.5px;
   }
   .room-photo-placeholder svg { width: 32px; height: 32px; opacity: 0.4; }
-  .upload-btn-overlay {
-    position: absolute;
-    bottom: 6px; right: 6px;
-    background: rgba(26,46,74,0.85);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 11px;
-    cursor: pointer;
-    display: flex; align-items: center; gap: 4px;
-    transition: background 0.15s;
-  }
-  .upload-btn-overlay:hover { background: var(--navy); }
-  .upload-input { display: none; }
 
   .room-info {
     padding: 10px 14px 12px;
@@ -569,13 +554,20 @@ const HEADERS = {
   'Prefer': 'return=representation'
 };
 
-// ── Constants ────────────────────────────────────────────────────
+// ── Room photos from Supabase Storage ───────────────────────────
+const STORAGE_URL = `${SUPABASE_URL}/storage/v1/object/public/room-photos`;
+
+function getRoomPhotoUrl(room) {
+  // Try jpg first, the image tag will handle errors
+  return `${STORAGE_URL}/${room}.jpg`;
+}
+
+
 const ROOMS = ['A1','B2','C3','D4','E5','F6'];
 const DAYS  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const HOURS = ['08:00','09:00','10:00','11:00','12:00','13:00',
                '14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00'];
 
-let roomImages = {};
 let bookings   = [];
 let weekOffset = 0;
 
@@ -649,29 +641,20 @@ function buildRoomsGrid() {
       return `<div class="day-slot${count===1?' booked':count>1?' multi':''}"
         title="${DAYS[d.getDay()]}: ${count} booking${count!==1?'s':''}"></div>`;
     }).join('');
-    const imgSrc = roomImages[room] || '';
+    const imgUrl = getRoomPhotoUrl(room);
     return `
     <div class="room-card">
-      <div class="room-photo" onclick="document.getElementById('upload-${room}').click()">
-        ${imgSrc
-          ? `<img src="${imgSrc}" alt="Room ${room}" />`
-          : `<div class="room-photo-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <circle cx="8.5" cy="8.5" r="1.5"/>
-                <polyline points="21,15 16,10 5,21"/>
-              </svg>
-              <span>Click to add photo</span>
-            </div>`}
-        <button class="upload-btn-overlay"
-          onclick="event.stopPropagation();document.getElementById('upload-${room}').click()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-            <polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/>
-          </svg> Photo
-        </button>
-        <input type="file" accept="image/*" class="upload-input" id="upload-${room}"
-          onchange="handleImageUpload('${room}',this)" />
+      <div class="room-photo">
+        <img src="${imgUrl}" alt="Room ${room}"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="room-photo-placeholder" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21,15 16,10 5,21"/>
+          </svg>
+          <span>No photo available</span>
+        </div>
       </div>
       <div class="room-info">
         <div class="room-name">Room ${room}</div>
@@ -680,13 +663,6 @@ function buildRoomsGrid() {
       </div>
     </div>`;
   }).join('');
-}
-
-function handleImageUpload(room, input) {
-  const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => { roomImages[room] = e.target.result; buildRoomsGrid(); };
-  reader.readAsDataURL(file);
 }
 
 // ── Render: schedule ─────────────────────────────────────────────
