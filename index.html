@@ -1,431 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Boscombe Life Church — Room Booking</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#1a2e4a;--navy-light:#243b5e;--gold:#c9a84c;--gold-light:#e8c97a;
+  --cream:#faf8f3;--cream-dark:#f0ece0;--text:#1a1a1a;--text-muted:#6b6357;
+  --border:#ddd8c8;--white:#ffffff;--success:#2d6a4f;--danger:#c0392b;
+  --shadow:0 2px 12px rgba(26,46,74,0.10);--radius:8px;
+  --font:'Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+  --font-ui:'Segoe UI',system-ui,sans-serif;
+}
+body{font-family:var(--font-ui);background:var(--cream);color:var(--text);min-height:100vh;}
 
-  :root {
-    --navy: #1a2e4a;
-    --navy-light: #243b5e;
-    --gold: #c9a84c;
-    --gold-light: #e8c97a;
-    --cream: #faf8f3;
-    --cream-dark: #f0ece0;
-    --text: #1a1a1a;
-    --text-muted: #6b6357;
-    --border: #ddd8c8;
-    --white: #ffffff;
-    --success: #2d6a4f;
-    --danger: #c0392b;
-    --shadow: 0 2px 12px rgba(26,46,74,0.10);
-    --radius: 8px;
-    --font: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
-    --font-ui: 'Segoe UI', system-ui, sans-serif;
-  }
+/* HEADER */
+header{background:var(--navy);color:var(--white);position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,0.18);}
+.header-inner{max-width:1300px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:14px 24px;}
+.church-logo{width:44px;height:44px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.church-logo svg{width:26px;height:26px;}
+header h1{font-family:var(--font);font-size:22px;font-weight:normal;color:var(--white);}
+header p{font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px;letter-spacing:0.8px;text-transform:uppercase;}
 
-  body {
-    font-family: var(--font-ui);
-    background: var(--cream);
-    color: var(--text);
-    min-height: 100vh;
-  }
+/* TABS */
+.tabs-bar{background:var(--navy-light);border-bottom:2px solid var(--gold);}
+.tabs-inner{max-width:1300px;margin:0 auto;display:flex;padding:0 24px;}
+.tab-btn{padding:13px 28px;color:rgba(255,255,255,0.65);font-size:14px;font-weight:500;border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.15s;letter-spacing:0.3px;}
+.tab-btn:hover{color:var(--white);}
+.tab-btn.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 
-  /* HEADER */
-  header {
-    background: var(--navy);
-    color: var(--white);
-    padding: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
-  }
-  .header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 16px 24px;
-  }
-  .church-logo {
-    width: 44px; height: 44px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .church-logo svg { width: 26px; height: 26px; }
-  header h1 {
-    font-family: var(--font);
-    font-size: 22px;
-    font-weight: normal;
-    letter-spacing: 0.5px;
-    color: var(--white);
-  }
-  header p {
-    font-size: 12px;
-    color: rgba(255,255,255,0.6);
-    margin-top: 2px;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-  }
+main{max-width:1300px;margin:0 auto;padding:28px 24px 60px;}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
 
-  main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 32px 24px 60px;
-  }
+/* ── ROOM CARDS ── */
+.rooms-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:24px;}
+@media(max-width:900px){.rooms-strip{grid-template-columns:repeat(3,1fr);}}
+.room-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.room-photo{width:100%;height:120px;overflow:hidden;background:var(--cream-dark);}
+.room-photo img{width:100%;height:100%;object-fit:contain;background:var(--cream-dark);}
+.room-photo-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text-muted);gap:4px;font-size:11px;}
+.room-photo-placeholder svg{width:28px;height:28px;opacity:0.35;}
+.room-info{padding:8px 10px 10px;}
+.room-name{font-family:var(--font);font-size:14px;color:var(--navy);}
+.room-week-bar{display:flex;gap:2px;margin-top:6px;}
+.day-slot{flex:1;height:5px;border-radius:3px;background:var(--cream-dark);}
+.day-slot.booked{background:var(--gold);}
+.day-slot.multi{background:var(--navy);}
 
-  /* SECTION HEADERS */
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .section-label h2 {
-    font-family: var(--font);
-    font-size: 20px;
-    font-weight: normal;
-    color: var(--navy);
-  }
-  .section-label .divider {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-  .week-nav {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    color: var(--text-muted);
-  }
-  .week-nav button {
-    background: var(--navy);
-    color: var(--white);
-    border: none;
-    border-radius: 4px;
-    padding: 4px 10px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: background 0.15s;
-  }
-  .week-nav button:hover { background: var(--navy-light); }
+/* ── CALENDAR TAB ── */
+.cal-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:18px;}
+.btn-group{display:flex;border:1px solid var(--border);border-radius:5px;overflow:hidden;}
+.btn-group button{padding:7px 14px;border:none;background:var(--white);font-size:13px;cursor:pointer;color:var(--text-muted);border-right:1px solid var(--border);transition:all 0.12s;}
+.btn-group button:last-child{border-right:none;}
+.btn-group button.active{background:var(--navy);color:var(--white);}
+.btn-group button:hover:not(.active){background:var(--cream-dark);}
+.nav-btn{padding:7px 13px;border:1px solid var(--border);border-radius:5px;background:var(--white);cursor:pointer;font-size:13px;transition:all 0.12s;}
+.nav-btn:hover{background:var(--navy);color:var(--white);}
+.cal-period{font-weight:600;color:var(--navy);font-size:15px;min-width:200px;text-align:center;}
+.filter-label{font-size:12px;color:var(--text-muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
+.room-filters{display:flex;flex-wrap:wrap;gap:6px;}
+.room-filter-btn{padding:5px 11px;border-radius:20px;border:1px solid var(--border);background:var(--white);font-size:12px;cursor:pointer;transition:all 0.12s;color:var(--text-muted);}
+.room-filter-btn:hover{border-color:var(--navy);color:var(--navy);}
+.room-filter-btn.active{background:var(--navy);color:var(--white);border-color:var(--navy);}
+.room-filter-btn.all-btn.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
 
-  /* ROOMS SECTION */
-  .rooms-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    margin-bottom: 40px;
-  }
-  @media (max-width: 700px) {
-    .rooms-grid { grid-template-columns: 1fr 1fr; }
-  }
+/* MONTHLY CALENDAR */
+.month-grid{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+.month-grid-head{display:grid;grid-template-columns:repeat(7,1fr);background:var(--navy);}
+.month-grid-head div{padding:10px 6px;text-align:center;font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);letter-spacing:0.5px;}
+.month-grid-body{display:grid;grid-template-columns:repeat(7,1fr);}
+.month-cell{min-height:90px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:6px 5px;position:relative;}
+.month-cell:nth-child(7n){border-right:none;}
+.month-cell.other-month{background:var(--cream);}
+.month-cell.today{background:#fff8e8;}
+.month-day-num{font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:4px;}
+.month-cell.today .month-day-num{color:var(--gold);background:var(--navy);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.month-chip{border-radius:3px;padding:2px 5px;font-size:10px;font-weight:500;margin-bottom:2px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:filter 0.12s;}
+.month-chip:hover{filter:brightness(0.88);}
+.month-more{font-size:10px;color:var(--text-muted);cursor:pointer;padding:1px 4px;}
+.month-more:hover{color:var(--navy);text-decoration:underline;}
 
-  .room-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: transform 0.15s;
-  }
-  .room-card:hover { transform: translateY(-2px); }
+/* WEEKLY / DAILY GRID */
+.time-grid-wrap{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow-x:auto;}
+table.time-grid{width:100%;border-collapse:collapse;min-width:600px;}
+table.time-grid th{background:var(--navy);color:var(--white);font-size:12px;font-weight:500;padding:10px 6px;text-align:center;position:sticky;top:0;z-index:10;}
+table.time-grid th:first-child{width:70px;text-align:right;padding-right:10px;}
+table.time-grid td{border:1px solid var(--border);padding:3px;vertical-align:top;height:38px;position:relative;}
+table.time-grid td.half-hour{border-top:1px dashed #eee;height:36px;}
+table.time-grid td:first-child{background:var(--cream);font-size:11px;color:var(--text-muted);text-align:right;padding-right:8px;padding-top:5px;white-space:nowrap;font-weight:500;border:1px solid var(--border);}
 
-  .room-photo {
-    width: 100%;
-    height: 200px;
-    background: var(--cream-dark);
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .room-photo img {
-    width: 100%; height: 100%;
-    object-fit: contain;
-    display: block;
-    background: #f0ece0;
-  }
-  .room-photo-placeholder {
-    width: 100%; height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    gap: 6px;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-  }
-  .room-photo-placeholder svg { width: 32px; height: 32px; opacity: 0.4; }
+/* BOOKING CHIPS */
+.booking-chip{display:block;border-radius:4px;padding:2px 6px;font-size:10px;font-weight:500;line-height:1.4;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:filter 0.12s;margin-bottom:1px;}
+.booking-chip:hover{filter:brightness(0.88);}
+.chip-0{background:#e8f0fe;color:#1a4396;}
+.chip-1{background:#e6f4ea;color:#1b5e35;}
+.chip-2{background:#fce8e6;color:#922b21;}
+.chip-3{background:#fff8e1;color:#7a5c00;}
+.chip-4{background:#f3e8fd;color:#5b1e8f;}
+.chip-5{background:#e8f5f9;color:#1a5f7a;}
 
-  .room-info {
-    padding: 10px 14px 12px;
-  }
-  .room-name {
-    font-family: var(--font);
-    font-size: 16px;
-    color: var(--navy);
-    font-weight: normal;
-  }
-  .room-bookings-count {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 2px;
-  }
-  .room-week-bar {
-    display: flex;
-    gap: 2px;
-    margin-top: 8px;
-  }
-  .day-slot {
-    flex: 1;
-    height: 6px;
-    border-radius: 3px;
-    background: var(--cream-dark);
-    position: relative;
-    cursor: default;
-  }
-  .day-slot.booked { background: var(--gold); }
-  .day-slot.multi { background: var(--navy); }
+/* TOOLTIP */
+.tooltip{display:none;position:fixed;background:var(--navy);color:var(--white);padding:10px 14px;border-radius:6px;font-size:12px;line-height:1.6;max-width:240px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.25);pointer-events:none;}
+.tooltip.active{display:block;}
+.tooltip strong{color:var(--gold-light);font-size:13px;display:block;margin-bottom:4px;}
 
-  /* WEEKLY SCHEDULE TABLE */
-  .schedule-wrap {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    overflow-x: auto;
-    margin-bottom: 40px;
-  }
-  table.schedule {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 680px;
-  }
-  table.schedule th {
-    background: var(--navy);
-    color: var(--white);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.6px;
-    padding: 10px 8px;
-    text-align: center;
-    position: sticky;
-    top: 0;
-  }
-  table.schedule th:first-child { text-align: left; padding-left: 16px; width: 80px; }
-  table.schedule td {
-    border: 1px solid var(--border);
-    padding: 4px;
-    vertical-align: top;
-    height: 48px;
-    position: relative;
-  }
-  table.schedule td:first-child {
-    background: var(--cream);
-    font-size: 11px;
-    color: var(--text-muted);
-    text-align: right;
-    padding-right: 10px;
-    padding-top: 6px;
-    white-space: nowrap;
-    font-weight: 500;
-  }
+/* ── BOOKING FORM TAB ── */
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 32px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-group.full{grid-column:1/-1;}
+.form-group label{font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--navy);}
+.form-group input,.form-group select,.form-group textarea{border:1px solid var(--border);border-radius:5px;padding:9px 12px;font-size:14px;font-family:var(--font-ui);background:var(--cream);color:var(--text);transition:border-color 0.15s,box-shadow 0.15s;outline:none;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(26,46,74,0.10);background:var(--white);}
+.form-group textarea{min-height:80px;resize:vertical;}
+.form-group input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:var(--navy);}
+.checkbox-row{flex-direction:row;align-items:center;gap:10px;}
+.checkbox-row label{text-transform:none;font-size:14px;letter-spacing:0;font-weight:400;cursor:pointer;}
+.form-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:22px;padding-top:18px;border-top:1px solid var(--border);}
+.btn{padding:10px 22px;border-radius:5px;border:none;cursor:pointer;font-size:14px;font-family:var(--font-ui);font-weight:500;transition:all 0.15s;}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-muted);}
+.btn-ghost:hover{border-color:var(--navy);color:var(--navy);}
+.btn-primary{background:var(--navy);color:var(--white);}
+.btn-primary:hover{background:var(--navy-light);}
+.btn-primary:disabled{opacity:0.6;cursor:not-allowed;}
+.recurring-options{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-top:4px;display:none;}
+.recurring-options.show{display:block;}
 
-  /* BOOKING CHIPS */
-  .booking-chip {
-    display: block;
-    border-radius: 4px;
-    padding: 3px 6px;
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 1.3;
-    cursor: pointer;
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: filter 0.15s;
-    margin-bottom: 1px;
-  }
-  .booking-chip:hover { filter: brightness(0.9); }
-  .chip-0 { background: #e8f0fe; color: #1a4396; }
-  .chip-1 { background: #e6f4ea; color: #1b5e35; }
-  .chip-2 { background: #fce8e6; color: #922b21; }
-  .chip-3 { background: #fff8e1; color: #7a5c00; }
-  .chip-4 { background: #f3e8fd; color: #5b1e8f; }
-  .chip-5 { background: #e8f5f9; color: #1a5f7a; }
+/* ── EVENTS LIST TAB ── */
+.events-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:18px;}
+.events-controls select{padding:8px 12px;border:1px solid var(--border);border-radius:5px;font-size:14px;background:var(--white);color:var(--text);outline:none;}
+.event-group-label{font-family:var(--font);font-size:17px;color:var(--navy);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.event-row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-radius:var(--radius);background:var(--white);border:1px solid var(--border);margin-bottom:8px;font-size:13px;transition:box-shadow 0.15s;}
+.event-row:hover{box-shadow:var(--shadow);}
+.event-room-badge{background:var(--navy);color:var(--gold-light);border-radius:4px;padding:3px 9px;font-size:12px;font-weight:600;min-width:36px;text-align:center;flex-shrink:0;}
+.event-meta{flex:1;}
+.event-meta strong{display:block;color:var(--navy);font-size:13px;}
+.event-meta span{color:var(--text-muted);font-size:12px;}
+.event-delete{background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px;border-radius:4px;display:flex;transition:all 0.15s;}
+.event-delete:hover{color:var(--danger);background:#fce8e6;}
+.event-recurring-badge{background:#f3e8fd;color:#5b1e8f;border-radius:10px;padding:2px 8px;font-size:10px;font-weight:600;margin-left:6px;}
+.no-events{text-align:center;color:var(--text-muted);padding:40px 16px;font-style:italic;font-family:var(--font);font-size:15px;}
 
-  /* TOOLTIP */
-  .tooltip {
-    display: none;
-    position: fixed;
-    background: var(--navy);
-    color: var(--white);
-    padding: 10px 14px;
-    border-radius: 6px;
-    font-size: 12px;
-    line-height: 1.6;
-    max-width: 220px;
-    z-index: 9999;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-    pointer-events: none;
-  }
-  .tooltip.active { display: block; }
-  .tooltip strong { color: var(--gold-light); font-size: 13px; display: block; margin-bottom: 4px; }
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;background:var(--success);color:var(--white);padding:12px 20px;border-radius:6px;font-size:14px;box-shadow:0 4px 16px rgba(0,0,0,0.2);transform:translateY(80px);opacity:0;transition:all 0.3s ease;z-index:9999;}
+.toast.show{transform:translateY(0);opacity:1;}
 
-  /* BOOKING FORM */
-  .form-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 28px 32px;
-  }
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px 24px;
-  }
-  @media (max-width: 600px) {
-    .form-grid { grid-template-columns: 1fr; }
-  }
-  .form-group { display: flex; flex-direction: column; gap: 5px; }
-  .form-group.full { grid-column: 1 / -1; }
-  .form-group label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    color: var(--navy);
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 9px 12px;
-    font-size: 14px;
-    font-family: var(--font-ui);
-    background: var(--cream);
-    color: var(--text);
-    transition: border-color 0.15s, box-shadow 0.15s;
-    outline: none;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--navy);
-    box-shadow: 0 0 0 3px rgba(26,46,74,0.10);
-    background: var(--white);
-  }
-  .form-group textarea { min-height: 80px; resize: vertical; }
-  .form-row { display: flex; gap: 12px; }
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px solid var(--border);
-  }
-  .btn {
-    padding: 10px 22px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    font-family: var(--font-ui);
-    font-weight: 500;
-    transition: all 0.15s;
-  }
-  .btn-ghost {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-  }
-  .btn-ghost:hover { border-color: var(--navy); color: var(--navy); }
-  .btn-primary {
-    background: var(--navy);
-    color: var(--white);
-  }
-  .btn-primary:hover { background: var(--navy-light); }
+/* LOADING / ERROR */
+#loading-bar{display:none;position:fixed;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#c9a84c,#1a2e4a,#c9a84c);background-size:200%;animation:loadbar 1.2s linear infinite;z-index:9999;}
+#error-banner{display:none;position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--danger);color:white;padding:10px 22px;border-radius:6px;font-size:13px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.2);}
+@keyframes loadbar{0%{background-position:0%}100%{background-position:200%}}
 
-  /* SUCCESS TOAST */
-  .toast {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    background: var(--success);
-    color: var(--white);
-    padding: 12px 20px;
-    border-radius: 6px;
-    font-size: 14px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    transform: translateY(80px);
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 9999;
-  }
-  .toast.show { transform: translateY(0); opacity: 1; }
-
-  /* BOOKINGS LIST */
-  .bookings-list { margin-bottom: 40px; }
-  .booking-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 16px;
-    border-radius: var(--radius);
-    background: var(--white);
-    border: 1px solid var(--border);
-    margin-bottom: 8px;
-    font-size: 13px;
-    transition: box-shadow 0.15s;
-  }
-  .booking-row:hover { box-shadow: var(--shadow); }
-  .booking-room-badge {
-    background: var(--navy);
-    color: var(--gold-light);
-    border-radius: 4px;
-    padding: 3px 8px;
-    font-size: 12px;
-    font-weight: 600;
-    min-width: 34px;
-    text-align: center;
-  }
-  .booking-meta { flex: 1; }
-  .booking-meta strong { display: block; color: var(--navy); font-size: 13px; }
-  .booking-meta span { color: var(--text-muted); font-size: 12px; }
-  .booking-delete {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 4px;
-    display: flex;
-    transition: all 0.15s;
-  }
-  .booking-delete:hover { color: var(--danger); background: #fce8e6; }
-  .no-bookings {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 32px 16px;
-    font-style: italic;
-    font-family: var(--font);
-    font-size: 15px;
-  }
+/* CONFLICT MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal{background:var(--white);border-radius:var(--radius);padding:28px 32px;max-width:480px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.2);}
+.modal h3{font-family:var(--font);color:var(--danger);margin-bottom:12px;font-size:18px;}
+.modal p{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:6px;}
+.modal ul{margin:10px 0 16px 18px;font-size:13px;color:var(--text);}
+.modal ul li{margin-bottom:4px;}
+.modal-actions{display:flex;justify-content:flex-end;margin-top:18px;}
 </style>
 </head>
 <body>
+
+<div id="loading-bar"></div>
+<div id="error-banner"></div>
 
 <header>
   <div class="header-inner">
@@ -445,46 +187,56 @@
   </div>
 </header>
 
+<div class="tabs-bar">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('calendar')">📅 Calendar</button>
+    <button class="tab-btn" onclick="switchTab('booking')">➕ Make a Booking</button>
+    <button class="tab-btn" onclick="switchTab('events')">📋 Upcoming Events</button>
+  </div>
+</div>
+
 <main>
-  <!-- ROOMS OVERVIEW -->
-  <div class="section-label">
-    <h2>Available Rooms</h2>
-    <div class="divider"></div>
-  </div>
-  <div class="rooms-grid" id="rooms-grid"></div>
 
-  <!-- WEEKLY SCHEDULE -->
-  <div class="section-label">
-    <h2>Weekly Schedule</h2>
-    <div class="divider"></div>
-    <div class="week-nav">
-      <button onclick="changeWeek(-1)">&#8592;</button>
-      <span id="week-label"></span>
-      <button onclick="changeWeek(1)">&#8594;</button>
+<!-- ════════════════════════════════════════
+     TAB 1 — CALENDAR
+════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-calendar">
+
+  <!-- Room photos strip -->
+  <div class="rooms-strip" id="rooms-strip"></div>
+
+  <!-- Controls -->
+  <div class="cal-controls">
+    <button class="nav-btn" onclick="calNav(-1)">&#8592;</button>
+    <span class="cal-period" id="cal-period"></span>
+    <button class="nav-btn" onclick="calNav(1)">&#8594;</button>
+
+    <div class="btn-group">
+      <button id="view-month" class="active" onclick="setCalView('month')">Month</button>
+      <button id="view-week" onclick="setCalView('week')">Week</button>
+      <button id="view-day" onclick="setCalView('day')">Day</button>
     </div>
-  </div>
-  <div class="schedule-wrap">
-    <table class="schedule" id="schedule-table">
-      <thead id="schedule-head"></thead>
-      <tbody id="schedule-body"></tbody>
-    </table>
+
+    <span class="filter-label">Filter:</span>
+    <div class="room-filters" id="room-filters"></div>
   </div>
 
-  <!-- BOOKINGS LIST -->
-  <div class="section-label">
-    <h2>This Week's Bookings</h2>
-    <div class="divider"></div>
-  </div>
-  <div class="bookings-list" id="bookings-list"></div>
+  <div id="cal-content"></div>
+</div>
 
-  <!-- BOOKING FORM -->
-  <div class="section-label">
-    <h2>Make a Booking</h2>
-    <div class="divider"></div>
-  </div>
+<!-- ════════════════════════════════════════
+     TAB 2 — BOOKING FORM
+════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-booking">
   <div class="form-card">
     <div class="form-grid">
-      <div class="form-group">
+
+      <div class="form-group full checkbox-row">
+        <input type="checkbox" id="f-allrooms" onchange="toggleAllRooms(this)"/>
+        <label for="f-allrooms">Book ALL rooms at once</label>
+      </div>
+
+      <div class="form-group" id="room-select-group">
         <label>Room</label>
         <select id="f-room">
           <option value="">Select a room...</option>
@@ -492,336 +244,661 @@
           <option>D4</option><option>E5</option><option>F6</option>
         </select>
       </div>
+
       <div class="form-group">
         <label>Responsible Person</label>
-        <input type="text" id="f-name" placeholder="Full name" />
+        <input type="text" id="f-name" placeholder="Full name"/>
       </div>
+
       <div class="form-group">
         <label>Date</label>
-        <input type="date" id="f-date" />
+        <input type="date" id="f-date"/>
       </div>
-      <div class="form-group">
+
+      <div class="form-group full checkbox-row">
+        <input type="checkbox" id="f-fullday" onchange="toggleFullDay(this)"/>
+        <label for="f-fullday">Full day booking (08:00 – 22:00)</label>
+      </div>
+
+      <div class="form-group" id="start-group">
         <label>Start Time</label>
-        <input type="time" id="f-start" />
+        <select id="f-start"></select>
       </div>
-      <div class="form-group">
+
+      <div class="form-group" id="end-group">
         <label>End Time</label>
-        <input type="time" id="f-end" />
+        <select id="f-end"></select>
       </div>
+
       <div class="form-group">
         <label>Contact / Phone</label>
-        <input type="text" id="f-contact" placeholder="Email or phone" />
+        <input type="text" id="f-contact" placeholder="Email or phone"/>
       </div>
+
       <div class="form-group full">
         <label>Purpose / Activity</label>
         <textarea id="f-purpose" placeholder="Describe the purpose of the booking..."></textarea>
       </div>
+
+      <!-- Recurring -->
+      <div class="form-group full checkbox-row">
+        <input type="checkbox" id="f-recurring" onchange="toggleRecurring(this)"/>
+        <label for="f-recurring">Recurring booking</label>
+      </div>
+
+      <div class="form-group full">
+        <div class="recurring-options" id="recurring-options">
+          <div class="form-grid" style="margin-top:0;">
+            <div class="form-group">
+              <label>Repeat every</label>
+              <select id="f-recur-freq">
+                <option value="weekly">Week</option>
+                <option value="biweekly">2 Weeks</option>
+                <option value="monthly">Month</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>End date (repeat until)</label>
+              <input type="date" id="f-recur-end"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="form-actions">
       <button class="btn btn-ghost" onclick="clearForm()">Clear</button>
-      <button class="btn btn-primary" onclick="submitBooking()">Confirm Booking</button>
+      <button class="btn btn-primary" id="submit-btn" onclick="submitBooking()">Confirm Booking</button>
     </div>
   </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     TAB 3 — EVENTS LIST
+════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-events">
+  <div class="events-controls">
+    <label style="font-size:13px;color:var(--text-muted);font-weight:600;">Filter by month:</label>
+    <select id="events-month-filter" onchange="renderEvents()">
+      <option value="">All upcoming</option>
+    </select>
+    <label style="font-size:13px;color:var(--text-muted);font-weight:600;">Room:</label>
+    <select id="events-room-filter" onchange="renderEvents()">
+      <option value="">All rooms</option>
+      <option>A1</option><option>B2</option><option>C3</option>
+      <option>D4</option><option>E5</option><option>F6</option>
+    </select>
+  </div>
+  <div id="events-list"></div>
+</div>
+
 </main>
 
-<!-- LOADING BAR -->
-<div id="loading-bar" style="display:none;position:fixed;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#c9a84c,#1a2e4a,#c9a84c);background-size:200%;animation:loadbar 1.2s linear infinite;z-index:9999;"></div>
-
-<!-- ERROR BANNER -->
-<div id="error-banner" style="display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#c0392b;color:white;padding:10px 22px;border-radius:6px;font-size:13px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.2);"></div>
+<!-- CONFLICT MODAL -->
+<div class="modal-overlay" id="conflict-modal">
+  <div class="modal">
+    <h3>⚠️ Booking Conflict</h3>
+    <p>The following conflicts were found:</p>
+    <ul id="conflict-list"></ul>
+    <p>Please choose a different time, room, or date.</p>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeModal()">OK, I'll adjust</button>
+    </div>
+  </div>
+</div>
 
 <!-- TOOLTIP -->
 <div class="tooltip" id="tooltip"></div>
-
 <!-- TOAST -->
 <div class="toast" id="toast">✓ Booking confirmed!</div>
 
-<style>
-@keyframes loadbar {
-  0%{background-position:0%} 100%{background-position:200%}
-}
-</style>
-
 <script>
-// ── Supabase config ──────────────────────────────────────────────
+// ── Config ───────────────────────────────────────────────────────
 const SUPABASE_URL = 'https://gzedvxpnkroftglhaiex.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_heBrN2iOiKiqHRahBcJIRw_FJ3H2nsA';
 const API = `${SUPABASE_URL}/rest/v1/Booking`;
 const HEADERS = {
-  'Content-Type': 'application/json',
-  'apikey': SUPABASE_KEY,
-  'Authorization': `Bearer ${SUPABASE_KEY}`,
-  'Prefer': 'return=representation'
+  'Content-Type':'application/json',
+  'apikey':SUPABASE_KEY,
+  'Authorization':`Bearer ${SUPABASE_KEY}`,
+  'Prefer':'return=representation'
 };
-
-// ── Room photos from GitHub repository ───────────────────────────
 const PHOTOS_URL = `https://raw.githubusercontent.com/zneowxyz/BLC-Room-Booking/main/photos`;
-
-function getRoomPhotoUrl(room) {
-  return `${PHOTOS_URL}/${room}.JPG`;
-}
-
-
 const ROOMS = ['A1','B2','C3','D4','E5','F6'];
-const DAYS  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const HOURS = ['08:00','09:00','10:00','11:00','12:00','13:00',
-               '14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00'];
+const DAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-let bookings   = [];
-let weekOffset = 0;
+// ── State ────────────────────────────────────────────────────────
+let bookings = [];
+let calView = 'month';       // month | week | day
+let calDate = new Date();    // anchor date
+let activeRooms = new Set(ROOMS); // filter
 
-// ── Supabase helpers ─────────────────────────────────────────────
+// ── Supabase ─────────────────────────────────────────────────────
 async function fetchBookings() {
   setLoading(true);
   try {
-    const res = await fetch(`${API}?order=date,start`, { headers: HEADERS });
+    const res = await fetch(`${API}?order=date,start`, {headers: HEADERS});
     if (!res.ok) throw new Error(await res.text());
     bookings = await res.json();
-  } catch (e) {
-    showError('Could not load bookings: ' + e.message);
-  } finally {
-    setLoading(false);
-  }
+  } catch(e) { showError('Could not load bookings: ' + e.message); }
+  finally { setLoading(false); }
 }
 
 async function insertBooking(data) {
-  const res = await fetch(API, {
-    method: 'POST',
-    headers: HEADERS,
-    body: JSON.stringify(data)
-  });
+  const res = await fetch(API, {method:'POST', headers:HEADERS, body:JSON.stringify(data)});
   if (!res.ok) throw new Error(await res.text());
   const rows = await res.json();
   return rows[0];
 }
 
 async function removeBooking(id) {
-  const res = await fetch(`${API}?id=eq.${id}`, {
-    method: 'DELETE',
-    headers: HEADERS
-  });
+  const res = await fetch(`${API}?id=eq.${id}`, {method:'DELETE', headers:HEADERS});
   if (!res.ok) throw new Error(await res.text());
 }
 
 // ── UI helpers ───────────────────────────────────────────────────
-function setLoading(on) {
-  document.getElementById('loading-bar').style.display = on ? 'block' : 'none';
-}
+function setLoading(on) { document.getElementById('loading-bar').style.display = on?'block':'none'; }
 function showError(msg) {
   const el = document.getElementById('error-banner');
-  el.textContent = msg;
-  el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 5000);
+  el.textContent = msg; el.style.display = 'block';
+  setTimeout(()=>el.style.display='none', 5000);
 }
-
 function formatDate(d) { return d.toISOString().split('T')[0]; }
+function parseDate(s) { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
+function fmtDisplay(s) { return parseDate(s).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
 
-function getWeekStart(offset) {
-  const d = new Date();
-  d.setDate(d.getDate() - d.getDay() + offset * 7);
-  d.setHours(0,0,0,0);
-  return d;
-}
-function getWeekDates(offset) {
-  const start = getWeekStart(offset);
-  return Array.from({length:7}, (_,i) => {
-    const d = new Date(start); d.setDate(start.getDate()+i); return d;
-  });
+// ── Tabs ─────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+  if (name==='calendar') renderCalendar();
+  if (name==='events') renderEvents();
 }
 
-// ── Render: rooms grid ───────────────────────────────────────────
-function buildRoomsGrid() {
-  const grid = document.getElementById('rooms-grid');
-  const weekDateStrings = getWeekDates(weekOffset).map(formatDate);
-  grid.innerHTML = ROOMS.map((room) => {
-    const roomBookings = bookings.filter(b => b.room === room && weekDateStrings.includes(b.date));
-    const daySlots = getWeekDates(weekOffset).map(d => {
-      const count = bookings.filter(b => b.room === room && b.date === formatDate(d)).length;
-      return `<div class="day-slot${count===1?' booked':count>1?' multi':''}"
-        title="${DAYS[d.getDay()]}: ${count} booking${count!==1?'s':''}"></div>`;
-    }).join('');
-    const imgUrl = getRoomPhotoUrl(room);
-    return `
-    <div class="room-card">
+// ── Room photo strip ─────────────────────────────────────────────
+function buildRoomsStrip() {
+  const today = formatDate(new Date());
+  const strip = document.getElementById('rooms-strip');
+  strip.innerHTML = ROOMS.map(room => {
+    const todayBookings = bookings.filter(b=>b.room===room && b.date===today).length;
+    return `<div class="room-card">
       <div class="room-photo">
-        <img src="${imgUrl}" alt="Room ${room}"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <img src="${PHOTOS_URL}/${room}.JPG" alt="Room ${room}"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
         <div class="room-photo-placeholder" style="display:none">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <polyline points="21,15 16,10 5,21"/>
-          </svg>
-          <span>No photo available</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+          <span>No photo</span>
         </div>
       </div>
       <div class="room-info">
         <div class="room-name">Room ${room}</div>
-        <div class="room-bookings-count">${roomBookings.length} booking${roomBookings.length!==1?'s':''} this week</div>
-        <div class="room-week-bar">${daySlots}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:2px">${todayBookings} booking${todayBookings!==1?'s':''} today</div>
       </div>
     </div>`;
   }).join('');
 }
 
-// ── Render: schedule ─────────────────────────────────────────────
-function buildSchedule() {
-  const weekDates = getWeekDates(weekOffset);
-  const fmt = d => d.toLocaleDateString('en-GB', {day:'numeric',month:'short'});
-  document.getElementById('week-label').textContent =
-    `${fmt(weekDates[0])} – ${fmt(weekDates[6])}`;
+// ── Room filters ─────────────────────────────────────────────────
+function buildRoomFilters() {
+  const wrap = document.getElementById('room-filters');
+  wrap.innerHTML = `<button class="room-filter-btn all-btn active" onclick="toggleFilterAll(this)">All</button>`
+    + ROOMS.map(r=>`<button class="room-filter-btn active" data-room="${r}" onclick="toggleFilterRoom(this,'${r}')">${r}</button>`).join('');
+}
 
-  document.getElementById('schedule-head').innerHTML = `<tr>
+function toggleFilterAll(btn) {
+  activeRooms = new Set(ROOMS);
+  document.querySelectorAll('.room-filter-btn').forEach(b=>b.classList.add('active'));
+  renderCalendar();
+}
+
+function toggleFilterRoom(btn, room) {
+  if (activeRooms.has(room)) {
+    activeRooms.delete(room);
+    btn.classList.remove('active');
+  } else {
+    activeRooms.add(room);
+    btn.classList.add('active');
+  }
+  const allActive = activeRooms.size === ROOMS.length;
+  document.querySelector('.all-btn').classList.toggle('active', allActive);
+  renderCalendar();
+}
+
+// ── Calendar rendering ───────────────────────────────────────────
+function setCalView(v) {
+  calView = v;
+  ['month','week','day'].forEach(x=>{
+    document.getElementById('view-'+x).classList.toggle('active', x===v);
+  });
+  renderCalendar();
+}
+
+function calNav(dir) {
+  if (calView==='month') calDate.setMonth(calDate.getMonth()+dir);
+  else if (calView==='week') calDate.setDate(calDate.getDate()+dir*7);
+  else calDate.setDate(calDate.getDate()+dir);
+  renderCalendar();
+}
+
+function renderCalendar() {
+  updatePeriodLabel();
+  if (calView==='month') renderMonth();
+  else if (calView==='week') renderWeek();
+  else renderDay();
+}
+
+function updatePeriodLabel() {
+  const el = document.getElementById('cal-period');
+  if (calView==='month') {
+    el.textContent = `${MONTH_NAMES[calDate.getMonth()]} ${calDate.getFullYear()}`;
+  } else if (calView==='week') {
+    const wk = getWeekDates(calDate);
+    const fmt = d=>d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+    el.textContent = `${fmt(wk[0])} – ${fmt(wk[6])} ${wk[0].getFullYear()}`;
+  } else {
+    el.textContent = calDate.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  }
+}
+
+function getWeekDates(anchor) {
+  const start = new Date(anchor);
+  start.setDate(anchor.getDate()-anchor.getDay());
+  start.setHours(0,0,0,0);
+  return Array.from({length:7},(_,i)=>{ const d=new Date(start);d.setDate(start.getDate()+i);return d; });
+}
+
+function filteredBookings() {
+  return bookings.filter(b=>activeRooms.has(b.room));
+}
+
+// ── MONTHLY VIEW ─────────────────────────────────────────────────
+function renderMonth() {
+  const year = calDate.getFullYear(), month = calDate.getMonth();
+  const firstDay = new Date(year,month,1).getDay();
+  const daysInMonth = new Date(year,month+1,0).getDate();
+  const daysInPrev = new Date(year,month,0).getDate();
+  const todayStr = formatDate(new Date());
+  const fb = filteredBookings();
+
+  let cells = '';
+  // Prev month padding
+  for(let i=firstDay-1;i>=0;i--){
+    const d = daysInPrev-i;
+    cells+=`<div class="month-cell other-month"><div class="month-day-num">${d}</div></div>`;
+  }
+  // Current month
+  for(let d=1;d<=daysInMonth;d++){
+    const ds = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday = ds===todayStr;
+    const dayBookings = fb.filter(b=>b.date===ds).sort((a,b)=>a.start.localeCompare(b.start));
+    const shown = dayBookings.slice(0,3);
+    const more = dayBookings.length-3;
+    const chips = shown.map(b=>{
+      const ci = ROOMS.indexOf(b.room)%6;
+      const safe = JSON.stringify(b).replace(/"/g,'&quot;');
+      return `<div class="month-chip chip-${ci}" onmouseenter="showTooltip(event,${safe})" onmouseleave="hideTooltip()">${b.room} ${b.start} ${b.purpose.substring(0,14)}${b.purpose.length>14?'…':''}</div>`;
+    }).join('');
+    const moreLink = more>0?`<div class="month-more">+${more} more</div>`:'';
+    cells+=`<div class="month-cell${isToday?' today':''}">
+      <div class="month-day-num">${d}</div>
+      ${chips}${moreLink}
+    </div>`;
+  }
+  // Next month padding
+  const totalCells = Math.ceil((firstDay+daysInMonth)/7)*7;
+  for(let d=1;d<=totalCells-(firstDay+daysInMonth);d++){
+    cells+=`<div class="month-cell other-month"><div class="month-day-num">${d}</div></div>`;
+  }
+
+  document.getElementById('cal-content').innerHTML = `
+    <div class="month-grid">
+      <div class="month-grid-head">${DAY_NAMES.map(d=>`<div>${d}</div>`).join('')}</div>
+      <div class="month-grid-body">${cells}</div>
+    </div>`;
+}
+
+// ── WEEKLY VIEW ──────────────────────────────────────────────────
+function renderWeek() {
+  const days = getWeekDates(calDate);
+  const fb = filteredBookings();
+  const hours = getHourSlots();
+
+  const head = `<thead><tr>
     <th>Time</th>
-    ${weekDates.map(d =>
-      `<th>${DAYS[d.getDay()]}<br>
-       <span style="font-weight:400;opacity:0.7;font-size:10px">${d.getDate()}/${d.getMonth()+1}</span>
-      </th>`).join('')}
-  </tr>`;
+    ${days.map(d=>`<th>${DAY_NAMES[d.getDay()]}<br><span style="font-weight:400;opacity:0.7;font-size:10px">${d.getDate()}/${d.getMonth()+1}</span></th>`).join('')}
+  </tr></thead>`;
 
-  document.getElementById('schedule-body').innerHTML = HOURS.map(hour => {
-    const h = parseInt(hour);
-    const cells = weekDates.map(d => {
+  const body = hours.map(({label,h,half})=>{
+    const cells = days.map(d=>{
       const ds = formatDate(d);
-      const hits = bookings.filter(b => {
-        if (b.date !== ds) return false;
-        return parseInt(b.start) <= h && parseInt(b.end) > h;
+      const hits = fb.filter(b=>{
+        if(b.date!==ds) return false;
+        if(b.fullday) return true;
+        const bs=timeToMins(b.start), be=timeToMins(b.end), slot=h*60+(half?30:0);
+        return bs<=slot && be>slot;
       });
-      const chips = hits.map(b => {
-        const colorIdx = ROOMS.indexOf(b.room) % 6;
-        const safe = JSON.stringify(b).replace(/"/g,'&quot;');
-        return `<span class="booking-chip chip-${colorIdx}"
-          onmouseenter="showTooltip(event,${safe})" onmouseleave="hideTooltip()">
-          ${b.room} · ${b.purpose.substring(0,18)}${b.purpose.length>18?'…':''}
-        </span>`;
+      const chips = hits.map(b=>{
+        const ci=ROOMS.indexOf(b.room)%6;
+        const safe=JSON.stringify(b).replace(/"/g,'&quot;');
+        return `<span class="booking-chip chip-${ci}" onmouseenter="showTooltip(event,${safe})" onmouseleave="hideTooltip()">${b.room}·${b.purpose.substring(0,12)}${b.purpose.length>12?'…':''}</span>`;
       }).join('');
       return `<td>${chips}</td>`;
     }).join('');
-    return `<tr><td>${hour}</td>${cells}</tr>`;
+    return `<tr><td>${label}</td>${cells}</tr>`;
   }).join('');
+
+  document.getElementById('cal-content').innerHTML = `
+    <div class="time-grid-wrap"><table class="time-grid">${head}<tbody>${body}</tbody></table></div>`;
 }
 
-// ── Render: bookings list ────────────────────────────────────────
-function buildList() {
-  const weekDates = getWeekDates(weekOffset).map(formatDate);
-  const week = bookings
-    .filter(b => weekDates.includes(b.date))
-    .sort((a,b) => a.date.localeCompare(b.date) || a.start.localeCompare(b.start));
-  const list = document.getElementById('bookings-list');
-  if (!week.length) {
-    list.innerHTML = `<div class="no-bookings">No bookings for this week.</div>`; return;
+// ── DAILY VIEW ───────────────────────────────────────────────────
+function renderDay() {
+  const ds = formatDate(calDate);
+  const fb = filteredBookings().filter(b=>b.date===ds);
+  const hours = getHourSlots();
+
+  const head = `<thead><tr>
+    <th>Time</th>
+    ${ROOMS.filter(r=>activeRooms.has(r)).map(r=>`<th>${r}</th>`).join('')}
+  </tr></thead>`;
+
+  const body = hours.map(({label,h,half})=>{
+    const cells = ROOMS.filter(r=>activeRooms.has(r)).map(room=>{
+      const hits = fb.filter(b=>{
+        if(b.room!==room) return false;
+        if(b.fullday) return true;
+        const bs=timeToMins(b.start),be=timeToMins(b.end),slot=h*60+(half?30:0);
+        return bs<=slot && be>slot;
+      });
+      const chips = hits.map(b=>{
+        const ci=ROOMS.indexOf(b.room)%6;
+        const safe=JSON.stringify(b).replace(/"/g,'&quot;');
+        return `<span class="booking-chip chip-${ci}" onmouseenter="showTooltip(event,${safe})" onmouseleave="hideTooltip()">${b.purpose.substring(0,14)}${b.purpose.length>14?'…':''}</span>`;
+      }).join('');
+      return `<td>${chips}</td>`;
+    }).join('');
+    return `<tr><td>${label}</td>${cells}</tr>`;
+  }).join('');
+
+  document.getElementById('cal-content').innerHTML = `
+    <div class="time-grid-wrap"><table class="time-grid">${head}<tbody>${body}</tbody></table></div>`;
+}
+
+function getHourSlots() {
+  const slots = [];
+  for(let h=8;h<=21;h++){
+    slots.push({label:`${String(h).padStart(2,'0')}:00`,h,half:false});
+    if(h<22) slots.push({label:`${String(h).padStart(2,'0')}:30`,h,half:true});
   }
-  list.innerHTML = week.map(b => `
-    <div class="booking-row">
-      <span class="booking-room-badge">${b.room}</span>
-      <div class="booking-meta">
-        <strong>${b.purpose}</strong>
-        <span>${b.date} · ${b.start}–${b.end} · ${b.name}${b.contact?' · '+b.contact:''}</span>
-      </div>
-      <button class="booking-delete" onclick="deleteBooking('${b.id}')" title="Delete booking">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <polyline points="3,6 5,6 21,6"/>
-          <path d="M19,6l-1,14a2,2,0,0,1-2,2H8a2,2,0,0,1-2-2L5,6"/>
-          <path d="M10,11v6M14,11v6"/>
-          <path d="M9,6V4a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1v2"/>
-        </svg>
-      </button>
-    </div>`).join('');
+  return slots;
 }
 
-// ── Render all ───────────────────────────────────────────────────
-function render() { buildRoomsGrid(); buildSchedule(); buildList(); }
+function timeToMins(t) {
+  if(!t) return 0;
+  const [hh,mm]=t.split(':').map(Number);
+  return hh*60+(mm||0);
+}
 
-async function changeWeek(dir) { weekOffset += dir; render(); }
-
-// ── Tooltip ──────────────────────────────────────────────────────
+// ── TOOLTIP ──────────────────────────────────────────────────────
 const tooltip = document.getElementById('tooltip');
-function showTooltip(e, b) {
-  tooltip.innerHTML = `
-    <strong>${b.room} — ${b.purpose}</strong>
-    <span>📅 ${b.date}</span><br>
-    <span>⏰ ${b.start} – ${b.end}</span><br>
-    <span>👤 ${b.name}</span>
-    ${b.contact ? `<br><span>📞 ${b.contact}</span>` : ''}`;
+function showTooltip(e,b) {
+  tooltip.innerHTML=`<strong>${b.room} — ${b.purpose}</strong>
+    📅 ${fmtDisplay(b.date)}<br>
+    ⏰ ${b.fullday?'Full Day':b.start+' – '+b.end}<br>
+    👤 ${b.name}${b.contact?'<br>📞 '+b.contact:''}
+    ${b.recurring_group?'<br><span style="color:var(--gold-light)">🔁 Recurring</span>':''}`;
   tooltip.classList.add('active');
-  positionTooltip(e);
+  posTooltip(e);
 }
-function positionTooltip(e) {
-  let x = e.clientX+14, y = e.clientY+14;
-  if (x+230 > window.innerWidth)  x = e.clientX-230;
-  if (y+140 > window.innerHeight) y = e.clientY-140;
-  tooltip.style.left = x+'px'; tooltip.style.top = y+'px';
+function posTooltip(e){
+  let x=e.clientX+14,y=e.clientY+14;
+  if(x+250>window.innerWidth)x=e.clientX-250;
+  if(y+150>window.innerHeight)y=e.clientY-150;
+  tooltip.style.left=x+'px';tooltip.style.top=y+'px';
 }
-document.addEventListener('mousemove', e => {
-  if (tooltip.classList.contains('active')) positionTooltip(e);
-});
-function hideTooltip() { tooltip.classList.remove('active'); }
+document.addEventListener('mousemove',e=>{if(tooltip.classList.contains('active'))posTooltip(e);});
+function hideTooltip(){tooltip.classList.remove('active');}
 
-// ── Submit booking ───────────────────────────────────────────────
+// ── BOOKING FORM ─────────────────────────────────────────────────
+function buildTimeSelects() {
+  const startSel = document.getElementById('f-start');
+  const endSel = document.getElementById('f-end');
+  startSel.innerHTML='<option value="">Select...</option>';
+  endSel.innerHTML='<option value="">Select...</option>';
+  // Start: 08:00 to 21:00 in 30min blocks
+  for(let h=8;h<=21;h++){
+    for(let m=0;m<60;m+=30){
+      const val=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+      startSel.innerHTML+=`<option value="${val}">${val}</option>`;
+    }
+  }
+  // End: 08:30 to 22:00 in 30min blocks
+  for(let h=8;h<=22;h++){
+    for(let m=0;m<60;m+=30){
+      if(h===8&&m===0) continue; // skip 08:00 as end
+      if(h===22&&m===30) break;
+      const val=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+      endSel.innerHTML+=`<option value="${val}">${val}</option>`;
+    }
+  }
+}
+
+function toggleFullDay(cb) {
+  const show = !cb.checked;
+  document.getElementById('start-group').style.display = show?'':'none';
+  document.getElementById('end-group').style.display = show?'':'none';
+}
+
+function toggleAllRooms(cb) {
+  document.getElementById('room-select-group').style.display = cb.checked?'none':'';
+}
+
+function toggleRecurring(cb) {
+  document.getElementById('recurring-options').classList.toggle('show', cb.checked);
+}
+
 async function submitBooking() {
-  const room    = document.getElementById('f-room').value;
-  const name    = document.getElementById('f-name').value.trim();
-  const date    = document.getElementById('f-date').value;
-  const start   = document.getElementById('f-start').value;
-  const end     = document.getElementById('f-end').value;
+  const allRooms = document.getElementById('f-allrooms').checked;
+  const room = document.getElementById('f-room').value;
+  const name = document.getElementById('f-name').value.trim();
+  const date = document.getElementById('f-date').value;
+  const fullday = document.getElementById('f-fullday').checked;
+  const start = fullday?'08:00':document.getElementById('f-start').value;
+  const end = fullday?'22:00':document.getElementById('f-end').value;
   const purpose = document.getElementById('f-purpose').value.trim();
   const contact = document.getElementById('f-contact').value.trim();
+  const recurring = document.getElementById('f-recurring').checked;
+  const recurFreq = document.getElementById('f-recur-freq').value;
+  const recurEnd = document.getElementById('f-recur-end').value;
 
-  if (!room || !name || !date || !start || !end || !purpose) {
-    alert('Please fill in all required fields (Room, Name, Date, Start/End Time, Purpose).');
+  // Validation
+  if((!allRooms&&!room)||!name||!date||!start||!end||!purpose){
+    showError('Please fill in all required fields.'); return;
+  }
+  if(!fullday && timeToMins(start)>=timeToMins(end)){
+    showError('End time must be after start time.'); return;
+  }
+  if(recurring&&!recurEnd){
+    showError('Please set an end date for recurring bookings.'); return;
+  }
+  if(recurring&&recurEnd<=date){
+    showError('Recurring end date must be after the booking date.'); return;
+  }
+
+  const roomsToBook = allRooms ? ROOMS : [room];
+
+  // Generate all dates
+  const dates = [date];
+  if(recurring){
+    let cur = parseDate(date);
+    const endD = parseDate(recurEnd);
+    while(true){
+      if(recurFreq==='weekly') cur.setDate(cur.getDate()+7);
+      else if(recurFreq==='biweekly') cur.setDate(cur.getDate()+14);
+      else cur.setMonth(cur.getMonth()+1);
+      if(cur>endD) break;
+      dates.push(formatDate(cur));
+    }
+  }
+
+  // Check conflicts
+  const conflicts = [];
+  for(const r of roomsToBook){
+    for(const d of dates){
+      const clash = bookings.find(b=>
+        b.room===r && b.date===d &&
+        (b.fullday || fullday || !(timeToMins(end)<=timeToMins(b.start)||timeToMins(start)>=timeToMins(b.end)))
+      );
+      if(clash) conflicts.push(`Room ${r} on ${fmtDisplay(d)}: ${clash.start}–${clash.end} (${clash.purpose})`);
+    }
+  }
+  if(conflicts.length){
+    document.getElementById('conflict-list').innerHTML = conflicts.map(c=>`<li>${c}</li>`).join('');
+    document.getElementById('conflict-modal').classList.add('show');
     return;
   }
-  if (start >= end) { alert('End time must be after start time.'); return; }
 
-  const conflict = bookings.find(b =>
-    b.room === room && b.date === date && !(end <= b.start || start >= b.end)
-  );
-  if (conflict) {
-    alert(`Room ${room} is already booked on ${date} from ${conflict.start} to ${conflict.end}.\n\nPlease choose a different time or room.`);
-    return;
-  }
-
-  const btn = document.querySelector('.btn-primary');
-  btn.disabled = true; btn.textContent = 'Saving…';
+  // Save
+  const btn = document.getElementById('submit-btn');
+  btn.disabled=true; btn.textContent='Saving…';
+  const recurringGroup = recurring ? Date.now().toString() : null;
   try {
-    const saved = await insertBooking({ room, name, date, start, end, purpose, contact });
-    bookings.push(saved);
-    showToast(); clearForm(); render();
-  } catch(e) {
-    showError('Could not save booking: ' + e.message);
+    for(const r of roomsToBook){
+      for(const d of dates){
+        const saved = await insertBooking({room:r,name,date:d,start,end,purpose,contact,fullday,recurring_group:recurringGroup});
+        bookings.push(saved);
+      }
+    }
+    showToast(dates.length*roomsToBook.length);
+    clearForm();
+    buildRoomsStrip();
+  } catch(e){
+    showError('Could not save booking: '+e.message);
   } finally {
-    btn.disabled = false; btn.textContent = 'Confirm Booking';
+    btn.disabled=false; btn.textContent='Confirm Booking';
   }
 }
 
-function clearForm() {
-  ['f-room','f-name','f-date','f-start','f-end','f-purpose','f-contact']
-    .forEach(id => document.getElementById(id).value = '');
-  document.getElementById('f-date').value = formatDate(new Date());
+function clearForm(){
+  ['f-name','f-date','f-contact','f-purpose','f-recur-end'].forEach(id=>document.getElementById(id).value='');
+  ['f-room','f-start','f-end'].forEach(id=>document.getElementById(id).selectedIndex=0);
+  ['f-allrooms','f-fullday','f-recurring'].forEach(id=>document.getElementById(id).checked=false);
+  document.getElementById('recurring-options').classList.remove('show');
+  document.getElementById('room-select-group').style.display='';
+  document.getElementById('start-group').style.display='';
+  document.getElementById('end-group').style.display='';
+  document.getElementById('f-date').value=formatDate(new Date());
 }
 
-// ── Delete booking ───────────────────────────────────────────────
-async function deleteBooking(id) {
-  if (!confirm('Remove this booking?')) return;
-  try {
+function closeModal(){ document.getElementById('conflict-modal').classList.remove('show'); }
+
+// ── EVENTS LIST ───────────────────────────────────────────────────
+function buildMonthFilter(){
+  const sel = document.getElementById('events-month-filter');
+  const months = new Set();
+  const today = formatDate(new Date());
+  bookings.filter(b=>b.date>=today).forEach(b=>{
+    const [y,m]=b.date.split('-');
+    months.add(`${y}-${m}`);
+  });
+  const sorted = [...months].sort();
+  sel.innerHTML='<option value="">All upcoming</option>';
+  sorted.forEach(ym=>{
+    const [y,m]=ym.split('-');
+    sel.innerHTML+=`<option value="${ym}">${MONTH_NAMES[parseInt(m)-1]} ${y}</option>`;
+  });
+}
+
+function renderEvents(){
+  const monthFilter = document.getElementById('events-month-filter').value;
+  const roomFilter = document.getElementById('events-room-filter').value;
+  const today = formatDate(new Date());
+
+  let list = bookings
+    .filter(b=>b.date>=today)
+    .filter(b=>!roomFilter||b.room===roomFilter)
+    .filter(b=>!monthFilter||b.date.startsWith(monthFilter))
+    .sort((a,b)=>a.date.localeCompare(b.date)||a.start.localeCompare(b.start));
+
+  if(!list.length){
+    document.getElementById('events-list').innerHTML=`<div class="no-events">No upcoming events found.</div>`;
+    return;
+  }
+
+  // Group by month
+  const groups = {};
+  list.forEach(b=>{
+    const [y,m]=b.date.split('-');
+    const key=`${y}-${m}`;
+    if(!groups[key]) groups[key]=[];
+    groups[key].push(b);
+  });
+
+  let html='';
+  Object.entries(groups).forEach(([ym,items])=>{
+    const [y,m]=ym.split('-');
+    html+=`<div class="event-group-label">${MONTH_NAMES[parseInt(m)-1]} ${y}</div>`;
+    items.forEach(b=>{
+      const ci=ROOMS.indexOf(b.room)%6;
+      const recurBadge=b.recurring_group?`<span class="event-recurring-badge">🔁 Recurring</span>`:'';
+      html+=`<div class="event-row">
+        <span class="event-room-badge">${b.room}</span>
+        <div class="event-meta">
+          <strong>${b.purpose}${recurBadge}</strong>
+          <span>${fmtDisplay(b.date)} · ${b.fullday?'Full Day':b.start+' – '+b.end} · 👤 ${b.name}${b.contact?' · '+b.contact:''}</span>
+        </div>
+        <button class="event-delete" onclick="deleteBooking('${b.id}')" title="Delete">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polyline points="3,6 5,6 21,6"/>
+            <path d="M19,6l-1,14a2,2,0,0,1-2,2H8a2,2,0,0,1-2-2L5,6"/>
+            <path d="M10,11v6M14,11v6"/>
+            <path d="M9,6V4a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1v2"/>
+          </svg>
+        </button>
+      </div>`;
+    });
+  });
+  document.getElementById('events-list').innerHTML=html;
+}
+
+async function deleteBooking(id){
+  if(!confirm('Remove this booking?')) return;
+  try{
     await removeBooking(id);
-    bookings = bookings.filter(b => b.id !== id);
-    render();
-  } catch(e) {
-    showError('Could not delete booking: ' + e.message);
-  }
+    bookings=bookings.filter(b=>b.id!==id);
+    renderEvents();
+    buildRoomsStrip();
+    renderCalendar();
+  } catch(e){ showError('Could not delete: '+e.message); }
 }
 
-// ── Toast ────────────────────────────────────────────────────────
-const toast = document.getElementById('toast');
-function showToast() {
+// ── TOAST ─────────────────────────────────────────────────────────
+const toast=document.getElementById('toast');
+function showToast(count=1){
+  toast.textContent=count>1?`✓ ${count} bookings confirmed!`:'✓ Booking confirmed!';
   toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2800);
+  setTimeout(()=>toast.classList.remove('show'),3000);
 }
 
-// ── Init ─────────────────────────────────────────────────────────
-document.getElementById('f-date').value = formatDate(new Date());
-fetchBookings().then(render);
+// ── INIT ──────────────────────────────────────────────────────────
+async function init(){
+  buildTimeSelects();
+  buildRoomFilters();
+  document.getElementById('f-date').value=formatDate(new Date());
+  // Set recurring end default to 3 months out
+  const recurDef=new Date(); recurDef.setMonth(recurDef.getMonth()+3);
+  document.getElementById('f-recur-end').value=formatDate(recurDef);
+
+  await fetchBookings();
+  buildRoomsStrip();
+  renderCalendar();
+  buildMonthFilter();
+}
+
+init();
 </script>
 </body>
 </html>
